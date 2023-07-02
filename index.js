@@ -1,10 +1,6 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-app.use(cors());
-app.use(express.json());
-app.use(requestLogger);
-app.use(express.static("build"));
 
 const morgan = require("morgan");
 
@@ -16,6 +12,10 @@ const requestLogger = (request, response, next) => {
   console.log("Body:  ", request.body);
   console.log("---");
   next();
+};
+
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: "unknown endpoint" });
 };
 
 const errorHandler = (error, request, response, next) => {
@@ -30,15 +30,16 @@ const errorHandler = (error, request, response, next) => {
   next(error);
 };
 
-const unknownEndpoint = (request, response) => {
-  response.status(404).send({ error: "unknown endpoint" });
-};
-
 morgan.token("body", (req) => {
   return JSON.stringify(req.body);
 });
 
 app.use(morgan(":method :url :status :response-time ms :body"));
+
+app.use(cors());
+app.use(express.json());
+app.use(requestLogger);
+app.use(express.static("build"));
 
 app.get("/info", (request, response, next) => {
   Person.find({})

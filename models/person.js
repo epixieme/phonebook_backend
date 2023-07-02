@@ -7,7 +7,7 @@ mongoose.set("strictQuery", false);
 mongoose
   .connect(url)
   .then((result) => {
-    console.log("connected to MongoDB");
+    console.log("connected to MongoDB" + result);
   })
   .catch((error) => {
     console.log("error connecting to MongoDB:", error.message);
@@ -33,7 +33,7 @@ const personSchema = new mongoose.Schema({
   },
 });
 
-const opts = { runValidators: true };
+// const opts = { runValidators: true };
 
 personSchema.set("toJSON", {
   transform: (document, returnedObject) => {

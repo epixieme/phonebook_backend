@@ -8,7 +8,6 @@
 // const password = process.argv[2]
 
 // const url = `mongodb+srv://epixieme:${password}@cluster0.kubo6ht.mongodb.net/`
-  
 
 // mongoose.set('strictQuery',false)
 // mongoose.connect(url)
